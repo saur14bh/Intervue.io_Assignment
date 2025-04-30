@@ -5,12 +5,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.time.Duration;
 import java.util.ArrayList;
 
 public class LoginTest {
     public static void main(String[] args) {
+        // Load environment variables from .env file
+        Dotenv dotenv = Dotenv.load();
+        String email = dotenv.get("EMAIL");
+        String password = dotenv.get("PASSWORD");
+
         System.setProperty("webdriver.chrome.driver", "C:\\Users\\Admin\\Downloads\\selenium-drivers\\chromedriver.exe");
 
         WebDriver driver = new ChromeDriver();
@@ -37,12 +43,12 @@ public class LoginTest {
 
             // Fill in the login details
             WebElement emailField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("email")));
-            emailField.sendKeys("neha@intervue.io");
+            emailField.sendKeys(email);
 
             Thread.sleep(1500);
 
             WebElement passwordField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("password")));
-            passwordField.sendKeys("Ps@neha@123");
+            passwordField.sendKeys(password);
 
             // Click final login button inside form
             WebElement finalLoginButton = wait.until(ExpectedConditions.elementToBeClickable(
